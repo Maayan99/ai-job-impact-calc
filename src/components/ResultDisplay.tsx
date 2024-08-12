@@ -25,13 +25,13 @@ export default function ResultDisplay({ score, jobDescription, comment }: Result
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-gray-800 bg-opacity-50 p-8 rounded-lg shadow-lg backdrop-blur-sm"
+            className="bg-gray-800 bg-opacity-30 p-10 rounded-2xl shadow-2xl backdrop-blur-lg border border-gray-700"
         >
-            <h2 className="text-2xl font-bold mb-6 text-center">AI Impact Results</h2>
-            <div className="mb-6">
-                <div className="text-lg font-semibold mb-2 text-center">Impact Score: {score}/10</div>
+            <h2 className="text-3xl font-bold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">AI Impact Results</h2>
+            <div className="mb-8">
+                <div className="text-2xl font-semibold mb-4 text-center">Impact Score: {score}/10</div>
                 <motion.div
-                    className="w-full h-4 bg-gray-700 rounded-full overflow-hidden"
+                    className="w-full h-6 bg-gray-700 rounded-full overflow-hidden"
                     initial={{ width: 0 }}
                     animate={{ width: '100%' }}
                     transition={{ duration: 0.5, delay: 0.2 }}
@@ -40,21 +40,33 @@ export default function ResultDisplay({ score, jobDescription, comment }: Result
                         className={`h-full rounded-full bg-gradient-to-r ${getScoreColor(score)}`}
                         initial={{ width: 0 }}
                         animate={{ width: `${score * 10}%` }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
+                        transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
                     />
                 </motion.div>
             </div>
-            <p className="text-gray-300 mb-6 text-center">{comment}</p>
-            <div className="text-sm text-gray-400 mb-6">
-                <h3 className="font-semibold mb-2">Job Description Analysis:</h3>
+            <motion.p
+                className="text-xl text-gray-300 mb-8 text-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 1 }}
+            >
+                {comment}
+            </motion.p>
+            <div className="text-sm text-gray-400 mb-8 bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2 text-gray-300">Job Description:</h3>
                 <p>{jobDescription}</p>
             </div>
-            <div className="flex justify-center space-x-4">
+            <motion.div
+                className="flex justify-center space-x-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 1.2 }}
+            >
                 <a
                     href={whatsappShareUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
+                    className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition transform hover:scale-105"
                 >
                     <FaWhatsapp className="mr-2" /> Share on WhatsApp
                 </a>
@@ -62,11 +74,11 @@ export default function ResultDisplay({ score, jobDescription, comment }: Result
                     href={twitterShareUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center px-4 py-2 bg-blue-400 text-white rounded-md hover:bg-blue-500 transition"
+                    className="inline-flex items-center px-6 py-3 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition transform hover:scale-105"
                 >
                     <FaTwitter className="mr-2" /> Share on Twitter
                 </a>
-            </div>
+            </motion.div>
         </motion.div>
     );
 }
