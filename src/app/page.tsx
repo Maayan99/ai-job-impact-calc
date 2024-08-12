@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 export default function Home() {
     const [score, setScore] = useState<number | null>(null);
     const [comment, setComment] = useState<string>('');
+    const [jobTitle, setJobTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -23,6 +24,7 @@ export default function Home() {
             const data = await response.json();
             setScore(data.score);
             setComment(data.comment);
+            setJobTitle(formData.jobTitle);
             setDescription(formData.jobDescription);
         } catch (error) {
             console.error('Error calculating impact:', error);
@@ -35,7 +37,7 @@ export default function Home() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white flex items-center justify-center p-4 sm:p-6 md:p-8">
             <div className="absolute inset-0 overflow-hidden">
-                <div className="absolute inset-0 bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+                <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
             </div>
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -49,7 +51,12 @@ export default function Home() {
                 {score === null ? (
                     <JobForm onSubmit={handleSubmit} isLoading={isLoading} />
                 ) : (
-                    <ResultDisplay score={score} jobDescription={description} comment={comment} />
+                    <ResultDisplay
+                        score={score}
+                        jobTitle={jobTitle}
+                        jobDescription={description}
+                        comment={comment}
+                    />
                 )}
             </motion.div>
         </div>
