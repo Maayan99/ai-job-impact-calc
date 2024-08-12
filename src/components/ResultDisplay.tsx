@@ -1,17 +1,24 @@
 import { motion } from 'framer-motion';
+import { FaWhatsapp, FaTwitter } from 'react-icons/fa';
 
-export default function ResultDisplay({ score, jobDescription }) {
-    const getScoreColor = (score) => {
+interface ResultDisplayProps {
+    score: number;
+    jobDescription: string;
+    comment: string;
+}
+
+export default function ResultDisplay({ score, jobDescription, comment }: ResultDisplayProps) {
+    const getScoreColor = (score: number) => {
         if (score <= 3) return 'from-green-400 to-green-600';
         if (score <= 7) return 'from-yellow-400 to-yellow-600';
         return 'from-red-400 to-red-600';
     };
 
-    const getImplicationText = (score) => {
-        if (score <= 3) return 'Low risk of AI impact. Your job is likely safe for the foreseeable future.';
-        if (score <= 7) return 'Moderate risk of AI impact. Some aspects of your job may be automated in the coming years.';
-        return 'High risk of AI impact. Your job may be significantly affected by AI in the near future.';
-    };
+    const shareText = `My job has an AI impact score of ${score}/10. ${comment}`;
+    const encodedShareText = encodeURIComponent(shareText);
+
+    const whatsappShareUrl = `https://wa.me/?text=${encodedShareText}`;
+    const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodedShareText}`;
 
     return (
         <motion.div
@@ -37,10 +44,28 @@ export default function ResultDisplay({ score, jobDescription }) {
                     />
                 </motion.div>
             </div>
-            <p className="text-gray-300 mb-6 text-center">{getImplicationText(score)}</p>
-            <div className="text-sm text-gray-400">
+            <p className="text-gray-300 mb-6 text-center">{comment}</p>
+            <div className="text-sm text-gray-400 mb-6">
                 <h3 className="font-semibold mb-2">Job Description Analysis:</h3>
                 <p>{jobDescription}</p>
+            </div>
+            <div className="flex justify-center space-x-4">
+                <a
+                    href={whatsappShareUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
+                >
+                    <FaWhatsapp className="mr-2" /> Share on WhatsApp
+                </a>
+                <a
+                    href={twitterShareUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center px-4 py-2 bg-blue-400 text-white rounded-md hover:bg-blue-500 transition"
+                >
+                    <FaTwitter className="mr-2" /> Share on Twitter
+                </a>
             </div>
         </motion.div>
     );

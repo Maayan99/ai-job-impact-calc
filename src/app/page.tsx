@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useState } from 'react';
 import JobForm from '../components/JobForm';
 import ResultDisplay from '../components/ResultDisplay';
@@ -6,13 +6,30 @@ import { motion } from 'framer-motion';
 
 export default function Home() {
     const [score, setScore] = useState<number | null>(null);
+    const [comment, setComment] = useState<string>('');
     const [description, setDescription] = useState<string>('');
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleSubmit = async (formData: any) => {
-        // Simulate API call (replace with actual API call)
-        const calculatedScore = Math.floor(Math.random() * 10) + 1;
-        setScore(calculatedScore);
-        setDescription(formData.jobDescription);
+        setIsLoading(true);
+        try {
+            const response = await fetch('/api/calculate-impact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            const data = await response.json();
+            setScore(data.score);
+            setComment(data.comment);
+            setDescription(formData.jobDescription);
+        } catch (error) {
+            console.error('Error calculating impact:', error);
+            // Handle error (e.g., show error message to user)
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -27,9 +44,9 @@ export default function Home() {
                     AI Job Impact Calculator
                 </h1>
                 {score === null ? (
-                    <JobForm onSubmit={handleSubmit} />
+                    <JobForm onSubmit={handleSubmit} isLoading={isLoading} />
                 ) : (
-                    <ResultDisplay score={score} jobDescription={description} />
+                    <ResultDisplay score={score} jobDescription={description} comment={comment} />
                 )}
             </motion.div>
         </div>

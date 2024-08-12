@@ -3,7 +3,12 @@ import { motion } from 'framer-motion';
 import JobTitleSelect from './JobTitleSelect';
 import FactorSlider from './FactorSlider';
 
-export default function JobForm({ onSubmit }) {
+interface JobFormProps {
+    onSubmit: (formData: any) => void;
+    isLoading: boolean;
+}
+
+export default function JobForm({ onSubmit, isLoading }: JobFormProps) {
     const [formData, setFormData] = useState({
         jobDescription: '',
         jobTitle: '',
@@ -13,12 +18,12 @@ export default function JobForm({ onSubmit }) {
         interpersonalFactor: 5,
     });
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         onSubmit(formData);
     };
@@ -85,14 +90,14 @@ export default function JobForm({ onSubmit }) {
                 value={formData.interpersonalFactor}
                 onChange={(name, value) => setFormData(prev => ({ ...prev, [name]: value }))}
             />
-
             <motion.button
                 type="submit"
                 className="w-full py-2 px-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-md shadow-md hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                disabled={isLoading}
             >
-                Calculate Impact
+                {isLoading ? 'Calculating...' : 'Calculate Impact'}
             </motion.button>
         </motion.form>
     );
