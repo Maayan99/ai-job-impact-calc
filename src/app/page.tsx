@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react';
 import Head from 'next/head';
 import JobForm from '../components/JobForm';
