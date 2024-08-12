@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import JobTitleSelect from './JobTitleSelect';
 
 interface JobFormProps {
-    onSubmit: (formData: any) => void;
+    onSubmit: (formData: { jobTitle: string; jobDescription: string }) => void;
     isLoading: boolean;
 }
 
@@ -37,7 +37,7 @@ export default function JobForm({ onSubmit, isLoading }: JobFormProps) {
                 </label>
                 <JobTitleSelect
                     value={formData.jobTitle}
-                    onChange={(value) => setFormData(prev => ({ ...prev, jobTitle: value }))}
+                    onChange={(value: string) => setFormData(prev => ({ ...prev, jobTitle: value }))}
                 />
             </div>
 

@@ -2,7 +2,12 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { jobTitles } from '../utils/jobTitles';
 
-export default function JobTitleSelect({ value, onChange }) {
+interface JobTitleSelectProps {
+    value: string;
+    onChange: (value: string) => void;
+}
+
+export default function JobTitleSelect({ value, onChange }: JobTitleSelectProps) {
     const [search, setSearch] = useState('');
     const [filteredTitles, setFilteredTitles] = useState(jobTitles);
     const [isOpen, setIsOpen] = useState(false);
@@ -16,13 +21,10 @@ export default function JobTitleSelect({ value, onChange }) {
 
     return (
         <div className="relative">
-            <label htmlFor="jobTitle" className="block text-sm font-medium text-gray-300 mb-2">
-                Job Title
-            </label>
             <input
                 type="text"
                 id="jobTitle"
-                className="w-full px-3 py-2 text-gray-300 bg-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                className="w-full px-4 py-3 text-gray-300 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 onFocus={() => setIsOpen(true)}
