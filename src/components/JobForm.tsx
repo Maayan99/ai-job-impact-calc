@@ -26,13 +26,13 @@ export default function JobForm({ onSubmit, isLoading }: JobFormProps) {
     return (
         <motion.form
             onSubmit={handleSubmit}
-            className="space-y-8 bg-gray-800 bg-opacity-30 p-10 rounded-2xl shadow-2xl backdrop-blur-lg border border-gray-700"
+            className="space-y-6 bg-gray-800 bg-opacity-30 p-6 sm:p-8 rounded-2xl shadow-2xl backdrop-blur-lg border border-gray-700"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
         >
             <div>
-                <label htmlFor="jobTitle" className="block text-lg font-medium text-gray-300 mb-2">
+                <label htmlFor="jobTitle" className="block text-base sm:text-lg font-medium text-gray-300 mb-2">
                     Job Title
                 </label>
                 <JobTitleSelect
@@ -42,15 +42,15 @@ export default function JobForm({ onSubmit, isLoading }: JobFormProps) {
             </div>
 
             <div>
-                <label htmlFor="jobDescription" className="block text-lg font-medium text-gray-300 mb-2">
+                <label htmlFor="jobDescription" className="block text-base sm:text-lg font-medium text-gray-300 mb-2">
                     Job Description
                 </label>
                 <div className="relative">
           <textarea
               id="jobDescription"
               name="jobDescription"
-              rows={6}
-              className="w-full px-4 py-3 text-gray-300 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              rows={4}
+              className="w-full px-3 py-2 text-sm sm:text-base text-gray-300 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               value={formData.jobDescription}
               onChange={handleChange}
               required
@@ -61,16 +61,12 @@ export default function JobForm({ onSubmit, isLoading }: JobFormProps) {
                   animation: 'gradient-animation 15s ease infinite',
               }}
           />
-                    <div className="absolute inset-0 rounded-lg pointer-events-none" style={{
-                        background: 'linear-gradient(45deg, rgba(100, 130, 255, 0.1) 0%, rgba(100, 130, 255, 0) 100%)',
-                        mixBlendMode: 'overlay',
-                    }}></div>
                 </div>
             </div>
 
             <motion.button
                 type="submit"
-                className="w-full py-3 px-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-lg font-semibold rounded-lg shadow-lg hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition"
+                className="w-full py-2 sm:py-3 px-4 sm:px-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-base sm:text-lg font-semibold rounded-lg shadow-lg hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 disabled={isLoading}
