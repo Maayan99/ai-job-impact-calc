@@ -9,13 +9,13 @@ interface JobTitleSelectProps {
 
 export default function JobTitleSelect({ value, onChange }: JobTitleSelectProps) {
     const [search, setSearch] = useState('');
-    const [filteredTitles, setFilteredTitles] = useState(jobTitles);
+    const [filteredTitles, setFilteredTitles] = useState<string[]>([]);
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        const filtered = jobTitles.filter(title =>
-            title.toLowerCase().includes(search.toLowerCase())
-        );
+        const filtered = jobTitles
+            .filter(title => title.toLowerCase().includes(search.toLowerCase()))
+            .slice(0, 10); // Cap suggestions at 10
         setFilteredTitles(filtered);
     }, [search]);
 
@@ -32,7 +32,7 @@ export default function JobTitleSelect({ value, onChange }: JobTitleSelectProps)
                 placeholder="Search job titles..."
             />
             <AnimatePresence>
-                {isOpen && search && (
+                {isOpen && search && filteredTitles.length > 0 && (
                     <motion.ul
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
