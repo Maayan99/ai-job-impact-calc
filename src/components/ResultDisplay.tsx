@@ -14,7 +14,9 @@ export default function ResultDisplay({ score, jobDescription, comment }: Result
         return 'from-red-400 to-red-600';
     };
 
-    const shareText = `My job has an AI impact score of ${score}/10. ${comment}`;
+    const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+
+    const shareText = `My job has an AI impact score of ${score}/10. ${comment}.\n\nCheck out the impact on your job here: ${shareUrl}`;
     const encodedShareText = encodeURIComponent(shareText);
 
     const whatsappShareUrl = `https://wa.me/?text=${encodedShareText}`;
