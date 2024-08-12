@@ -9,7 +9,7 @@ export async function calculateImpactScore(formData: any): Promise<{ score: numb
         const response = await openai.chat.completions.create({
             model: "gpt-4o",
             messages: [
-                { role: "system", content: "You are a harsh and brutally honest AI job impact analyst. Given a job description, assess the likelihood of AI taking over this job on a scale of 1 to 10, with 10 being certain replacement by AI. Be critical and pessimistic in your analysis. Provide a 1-sentence explanation: on the current impact, on near-future developments, and on long-term outlook. Format your response as 'Score: X\nExplanation: [Your 1-sentence explanation here]'" },
+                { role: "system", content: "You are a harsh and brutally honest AI job impact analyst. Given a job description, assess the likelihood of AI taking over this job on a scale of 1 to 10, with 10 being certain replacement by AI. Be critical and pessimistic in your analysis. Provide a 1-sentence (medium length sentence) explanation: on the current impact, on near-future developments, and on long-term outlook. Format your response as 'Score: X\nExplanation: [Your 1-sentence explanation here]'" },
                 { role: "user", content: `Job Title: ${formData.jobTitle}\nJob Description: ${formData.jobDescription}` }
             ],
             max_tokens: 200,
